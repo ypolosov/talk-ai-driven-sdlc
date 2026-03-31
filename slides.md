@@ -24,6 +24,3 @@ drawings:
     <carbon-logo-github />
   </a>
 </div>
-
-
----
