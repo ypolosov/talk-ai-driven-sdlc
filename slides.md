@@ -1,26 +1,179 @@
 ---
-theme: default
-title: AI-driven SDLC
-info: |
-  ## AI-driven SDLC
-  от первых принципов через системное мышление до production
-
-  Полосов Юрий · Solution Architect & Platform Engineer
-author: Полосов Юрий
-transition: slide-left
-colorSchema: dark
-fonts:
-  sans: Inter
-  mono: Fira Code
-highlighter: shiki
-drawings:
-  persist: false
+src: ./slides/01-intro.md
 ---
+<!-- Slide 1: Intro -->
 
-# AI-driven SDLC
+---
+src: ./slides/02-opening-hook.md
+---
+<!-- Slide 2: Opening hook -->
 
-<div class="abs-br m-6 flex gap-2">
-  <a href="https://github.com/ypolosov/talk-ai-driven-sdlc" target="_blank" class="text-xl slidev-icon-btn opacity-50 !border-none !hover:text-white">
-    <carbon-logo-github />
-  </a>
-</div>
+---
+src: ./slides/03-about-me.md
+---
+<!-- Slide 3: About me -->
+
+---
+src: ./slides/04-bakery-value-chain.md
+---
+<!-- Slide 4: Bakery value chain -->
+
+---
+src: ./slides/05-digital-twin.md
+---
+<!-- Slide 5: Digital twin -->
+
+---
+src: ./slides/06-classic-sdlc.md
+---
+<!-- Slide 6: Classic SDLC -->
+
+---
+src: ./slides/07-sdlc-meets-bakery.md
+---
+<!-- Slide 7: SDLC meets bakery chains -->
+
+---
+src: ./slides/08-system-types.md
+---
+<!-- Slide 8: Four system types -->
+
+---
+src: ./slides/09-dogfooding.md
+---
+<!-- Slide 9: Dogfooding pattern -->
+
+---
+src: ./slides/10-sdlc-target.md
+---
+<!-- Slide 10: What does SDLC apply to? -->
+
+---
+src: ./slides/11-ovs-dvs.md
+---
+<!-- Slide 11: OVS vs DVS -->
+
+---
+src: ./slides/12-sdlc-dual-nature.md
+---
+<!-- Slide 12: SDLC as tool and product -->
+
+---
+src: ./slides/13-vision-phase.md
+---
+<!-- Slide 13: Vision and concerns -->
+
+---
+src: ./slides/14-terminology.md
+---
+<!-- Slide 14: Five key concepts -->
+
+---
+src: ./slides/15-roles-in-action.md
+---
+<!-- Slide 15: Roles in action -->
+
+---
+src: ./slides/16-concern-chain.md
+---
+<!-- Slide 16: Concern → Viewpoint → View -->
+
+---
+src: ./slides/17-quality-attributes.md
+---
+<!-- Slide 17: Quality Attributes -->
+
+---
+src: ./slides/18-qa-per-phase.md
+---
+<!-- Slide 18: QA per SDLC phase -->
+
+---
+src: ./slides/19-situational-method.md
+---
+<!-- Slide 19: Situational Method Engineering -->
+
+---
+src: ./slides/20-igaming-chain.md
+---
+<!-- Slide 20: iGaming value chain -->
+
+---
+src: ./slides/21-igaming-dogfooding.md
+---
+<!-- Slide 21: iGaming dogfooding -->
+
+---
+src: ./slides/22-target-system-defined.md
+---
+<!-- Slide 22: Target system defined -->
+
+---
+src: ./slides/23-traceability.md
+---
+<!-- Slide 23: Traceability -->
+
+---
+src: ./slides/24-memom-phenom.md
+---
+<!-- Slide 24: Memom and Phenom -->
+
+---
+src: ./slides/25-prompt-as-memom.md
+---
+<!-- Slide 25: Prompt as memom -->
+
+---
+src: ./slides/26-levels-of-autonomy.md
+---
+<!-- Slide 26: Levels of Autonomy -->
+
+---
+src: ./slides/27-why-ai-sdlc.md
+---
+<!-- Slide 27: Why AI in SDLC -->
+
+---
+src: ./slides/28-tdd.md
+---
+<!-- Slide 28: TDD -->
+
+---
+src: ./slides/29-own-value-chain.md
+---
+<!-- Slide 29: Our own value chain -->
+
+---
+src: ./slides/30-functional-decomposition.md
+---
+<!-- Slide 30: Functional decomposition -->
+
+---
+src: ./slides/31-plugin-as-target.md
+---
+<!-- Slide 31: Plugin as target system -->
+
+---
+src: ./slides/32-continuous-everything.md
+---
+<!-- Slide 32: Continuous Everything -->
+
+---
+src: ./slides/33-market-comparison.md
+---
+<!-- Slide 33: Market comparison -->
+
+---
+src: ./slides/34-demo-todo.md
+---
+<!-- Slide 34: Demo TODO app -->
+
+---
+src: ./slides/35-demo-self.md
+---
+<!-- Slide 35: Demo self-application -->
+
+---
+src: ./slides/36-thank-you.md
+---
+<!-- Slide 36: Thank you -->
