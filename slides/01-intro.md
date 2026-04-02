@@ -2,6 +2,12 @@
 title: Intro
 ---
 
+<v-clicks>
+
 # AI-driven SDLC: через призму системного мышления
 
-<!-- Notes -->
+</v-clicks>
+
+<!--
+Notes
+-->

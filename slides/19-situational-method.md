@@ -2,6 +2,8 @@
 title: Situational method
 ---
 
+<v-clicks>
+
 - Это и есть Situational Method Engineering — выбор подходов под масштаб.
   - (показать сводную таблицу: этапы SDLC × масштаб проекта)
 
@@ -14,5 +16,7 @@ title: Situational method
 | **04 — Testing** | Ручной «покликал — работает» | Unit + Integration тесты, TDD, CI-прогон | Пирамида тестирования полная, contract tests, performance/security/chaos testing |
 | **05 — Deployment** | `git push` + Vercel / ручной deploy | CI/CD pipeline, staging-окружение, blue-green | GitOps, canary releases, multi-region, rollback strategy, change approval board |
 | **06 — Operations & Evolution** | Логи в консоли, «упало — починим» | Мониторинг (Grafana), alerting, SLO, incident runbooks | SRE-практики, SLA/SLO/SLI, observability (traces, metrics, logs), post-mortems, FinOps |
+
+</v-clicks>
 
 <!-- Notes -->

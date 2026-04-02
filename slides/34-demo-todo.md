@@ -2,7 +2,11 @@
 title: Demo TODO
 ---
 
+<v-clicks>
+
 - А теперь — давайте соберем все вместе и увидим AI-driven SDLC в действии.
   - (демо: применение Claude Code plugin как системы создания для простого TODO list приложения)
+
+</v-clicks>
 
 <!-- Notes -->

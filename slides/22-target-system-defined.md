@@ -2,6 +2,8 @@
 title: Target system defined
 ---
 
+<v-clicks>
+
 - Допустим, мы определили:
   - Целевая система — iGaming site (B2C)
   - Система создания — компания X
@@ -11,5 +13,7 @@ title: Target system defined
     - Вопрос залу: почему Traceability — в DVS, а не в OVS?
     - И почему Time-to-market — это именно DVS?
   - Масштаб — условно Mid size
+
+</v-clicks>
 
 <!-- Notes -->

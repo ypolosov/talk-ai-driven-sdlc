@@ -1,4 +1,8 @@
 ---
+theme: seriph
+addons:
+  - excalidraw
+
 src: ./slides/01-intro.md
 ---
 <!-- Slide 1: Intro -->
