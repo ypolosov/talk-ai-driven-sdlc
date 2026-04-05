@@ -183,6 +183,11 @@ src: ./slides/33-market-comparison.md
 <!-- Slide 33: Market comparison -->
 
 ---
+src: ./slides/33a-market-differentiation.md
+---
+<!-- Slide 33a: Market differentiation -->
+
+---
 src: ./slides/34-demo-todo.md
 ---
 <!-- Slide 34: Demo TODO app -->
