@@ -78,11 +78,6 @@ src: ./slides/15-roles-in-action.md
 <!-- Slide 15: Roles in action -->
 
 ---
-src: ./slides/16-concern-chain.md
----
-<!-- Slide 16: Concern → Viewpoint → View -->
-
----
 src: ./slides/17-quality-attributes.md
 ---
 <!-- Slide 17: Quality Attributes -->
@@ -98,7 +93,7 @@ src: ./slides/19-situational-method.md
 <!-- Slide 19: Situational Method Engineering -->
 
 ---
-src: ./slides/20-igaming-chain.md
+src: ./slides/20-igaming-value-chain.md
 ---
 <!-- Slide 20: iGaming value chain -->
 
@@ -106,6 +101,21 @@ src: ./slides/20-igaming-chain.md
 src: ./slides/21-igaming-dogfooding.md
 ---
 <!-- Slide 21: iGaming dogfooding -->
+
+---
+src: ./slides/21a-system-types-level1.md
+---
+<!-- Slide 21a: Project 1 - Pirozhok / iGaming site -->
+
+---
+src: ./slides/21b-system-types-level2.md
+---
+<!-- Slide 21b: Project 2 - Oven / Operator tenant -->
+
+---
+src: ./slides/21c-system-types-level3.md
+---
+<!-- Slide 21c: Project 3 - Factory / iGaming Platform -->
 
 ---
 src: ./slides/22-target-system-defined.md
@@ -151,6 +161,11 @@ src: ./slides/29-own-value-chain.md
 src: ./slides/30-functional-decomposition.md
 ---
 <!-- Slide 30: Functional decomposition -->
+
+---
+src: ./slides/30a-plugin-as-creator-system.md
+---
+<!-- Slide 30a: Plugin as creator system -->
 
 ---
 src: ./slides/31-plugin-as-target.md

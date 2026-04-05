@@ -2,21 +2,29 @@
 title: Situational method
 ---
 
+# Ситуационная инженерия методов
+
 <v-clicks>
 
-- Это и есть Situational Method Engineering — выбор подходов под масштаб.
-  - (показать сводную таблицу: этапы SDLC × масштаб проекта)
-
-| SDLC Phase | Pet Project | Mid Project | Enterprise Solution |
-|---|---|---|---|
-| **00 — Vision & Business Architecture** | README.md с идеей, 1 бизнес-модель на салфетке | Lean Canvas, Value Stream Mapping, стейкхолдер-анализ | BMC полный, ArchiMate, capability map, compliance-анализ |
-| **01 — Requirements** | TODO-список, user stories в голове | User Stories + Acceptance Criteria, MoSCoW-приоритизация | Use Cases, SRS (IEEE 830), Concern/Viewpoint (ISO 42010), трассировка требований |
-| **02 — Architecture & Design** | Никакой — «просто пишем код» | ADR (Architecture Decision Records), C4 level 1-2, ADD 3.0 lite | ADD 3.0 полный, ISO 42010 views, ATAM/QAW, reference architectures, PoC |
-| **03 — Development** | Один разработчик, main-ветка, vim/IDE | Git Flow / Trunk-based, PR review, линтеры, CI | Feature toggles, inner source, coding standards, code ownership (CODEOWNERS) |
-| **04 — Testing** | Ручной «покликал — работает» | Unit + Integration тесты, TDD, CI-прогон | Пирамида тестирования полная, contract tests, performance/security/chaos testing |
-| **05 — Deployment** | `git push` + Vercel / ручной deploy | CI/CD pipeline, staging-окружение, blue-green | GitOps, canary releases, multi-region, rollback strategy, change approval board |
-| **06 — Operations & Evolution** | Логи в консоли, «упало — починим» | Мониторинг (Grafana), alerting, SLO, incident runbooks | SRE-практики, SLA/SLO/SLI, observability (traces, metrics, logs), post-mortems, FinOps |
+Это и есть **Situational Method Engineering** - выбор подходов под масштаб.
 
 </v-clicks>
 
-<!-- Notes -->
+<table class="text-xs">
+<thead>
+<tr v-click><th>Phase</th><th>Pet project</th><th>Mid size</th><th>Enterprise solution</th></tr>
+</thead>
+<tbody>
+<tr v-click><td><b>Vision</b></td><td>README + салфетка</td><td>Lean Canvas, VSM, стейкхолдер-анализ</td><td>BMC, ArchiMate, capability map, compliance</td></tr>
+<tr v-click><td><b>Requirements</b></td><td>TODO в голове</td><td>User Stories, AC, MoSCoW</td><td>Use Cases, SRS (IEEE 830), ISO 42010, трассировка</td></tr>
+<tr v-click><td><b>Architecture</b></td><td>«просто код»</td><td>ADR, C4 L1-2, ADD lite</td><td>ADD 3.0, ISO 42010 views, ATAM/QAW, PoC</td></tr>
+<tr v-click><td><b>Development</b></td><td>main-ветка, IDE</td><td>Git Flow, PR review, линтеры, CI</td><td>Feature toggles, inner source, CODEOWNERS</td></tr>
+<tr v-click><td><b>Testing</b></td><td>«покликал»</td><td>Unit + Integration, TDD, CI</td><td>Pyramid, contract, performance, security, chaos</td></tr>
+<tr v-click><td><b>Deployment</b></td><td>git push + Vercel</td><td>CI/CD, staging, blue-green</td><td>GitOps, canary, multi-region, rollback</td></tr>
+<tr v-click><td><b>Operations</b></td><td>логи в консоли</td><td>Grafana, alerting, SLO, runbooks</td><td>SRE, SLA/SLO/SLI, observability, post-mortems</td></tr>
+</tbody>
+</table>
+
+<!--
+Notes
+-->

@@ -1,13 +1,32 @@
 ---
 title: Functional decomposition
+layout: two-cols-header
 ---
+
+# Functional decomposition / Constructive composition
+
+::left::
+
+![IEC 1392/09](/images/iec-1392-functional-decomposition.png)
+
+::right::
 
 <v-clicks>
 
-- Через функциональную декомпозицию и конструктивную композицию.
-  - (показать диаграмму из OMG Essence стандарта)
-  - (показать таблицу соответствия артефактов системного мышления → артефактам Claude Code plugin: https://code.claude.com/docs/en/features-overview)
+**Функциональный анализ** - рассмотрение системы через роли и методы работы.
+
+**Конструктивный синтез** - подбор аффордансов-конструктивов для реализации ролей.
+
+> Сначала определяем необходимые функции, потом подбираем реализующие их конструктивы.
 
 </v-clicks>
 
-<!-- Notes -->
+<style>
+.two-cols-header {
+  column-gap: 20px; /* Adjust the gap size as needed */
+}
+</style>
+
+<!--
+Notes
+-->

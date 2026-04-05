@@ -2,13 +2,22 @@
 title: Continuous everything
 ---
 
+# Continuous everything
+
 <v-clicks>
 
-- Это и есть Continuous Everything — непрерывность на всех горизонтах:
-  - dev-time — непрерывная разработка
-  - ops-time — непрерывная эксплуатация
-  - evo-time — непрерывная эволюция
+Это и есть Continuous Everything - непрерывность на всех горизонтах:
 
 </v-clicks>
 
-<!-- Notes -->
+<v-clicks>
+
+- **Dev-time** - непрерывная разработка
+- **Ops-time** - непрерывная эксплуатация
+- **Evo-time** - непрерывная эволюция
+
+</v-clicks>
+
+<!--
+Notes
+-->
