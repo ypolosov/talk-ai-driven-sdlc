@@ -15,7 +15,7 @@ title: Plugin as creator system
 <tr v-click><td><b>Subagent</b></td><td>Изолированный агент-исполнитель роли с preloaded методами</td></tr>
 <tr v-click><td><b>Command</b></td><td>Именованная точка входа в метод работы</td></tr>
 <tr v-click><td><b>Hook</b></td><td>Детерминированная fitness function, автоматический gate</td></tr>
-<tr v-click><td><b>MCP</b></td><td>Внешний конструктив-аффорданс, инструмент платформенного стека</td></tr>
+<tr v-click><td><b>MCP</b></td><td>Внешний конструктив-аффорданс, инструмент</td></tr>
 <tr v-click><td><b>Agent team</b></td><td>Оргструктура агентов в ролях с peer-to-peer координацией</td></tr>
 <tr v-click><td><b>Plugin</b></td><td>Система создания в сборе,  инструментальный стек</td></tr>
 <tr v-click><td><b>Marketplace</b></td><td>Платформа распространения систем создания в сообществе</td></tr>

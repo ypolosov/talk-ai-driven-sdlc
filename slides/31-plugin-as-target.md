@@ -1,14 +1,21 @@
 ---
 title: Plugin as target
+layout: two-cols-header
 ---
 
 # SDLC как целевая система
 
-<v-clicks>
+<v-clicks> 
 
-Итак, Claude Code plugin - это система создания. 
+Итак, Claude Code plugin - это система создания.
 
-Но рано или поздно мы захотим развивать сам плагин. 
+</v-clicks>
+
+::left::
+
+<v-clicks> 
+
+Но рано или поздно мы захотим развивать **сам плагин**. 
 
 Возможно, даже через тот же SDLC. 
 
@@ -25,6 +32,20 @@ title: Plugin as target
 - А с помощью самого себя?
 
 </v-clicks>
+
+::right::
+
+<v-clicks>
+
+![IEC 1392/09](/images/creation-graph.png)
+
+</v-clicks>
+
+<style>
+.two-cols-header {
+  column-gap: 20px; /* Adjust the gap size as needed */
+}
+</style>
 
 <!--
 Notes

@@ -2,7 +2,7 @@
 title: System types level 3
 ---
 
-# Проект 3: ЦС = Фабрика / iGaming Platform
+# Уровень 3: ЦС = Фабрика / iGaming Platform
 
 <v-clicks>
 
