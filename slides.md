@@ -178,6 +178,11 @@ src: ./slides/32-continuous-everything.md
 <!-- Slide 32: Continuous Everything -->
 
 ---
+src: ./slides/32a-alphas.md
+---
+<!-- Slide 32a: Alphas -->
+
+---
 src: ./slides/33-market-comparison.md
 ---
 <!-- Slide 33: Market comparison -->
