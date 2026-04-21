@@ -25,5 +25,5 @@ title: Dogfooding
 </v-clicks>
 
 <!--
-Notes
+- как это делает лучшим использование AI
 -->

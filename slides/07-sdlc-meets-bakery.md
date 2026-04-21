@@ -23,5 +23,5 @@ title: SDLC meets bakery
 </v-clicks>
 
 <!--
-Notes
+- вы стейкхолдер и зачем вам это?
 -->

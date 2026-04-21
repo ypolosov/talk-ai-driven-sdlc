@@ -6,7 +6,7 @@ title: Plugin as creator system
 
 <table class="text-xs">
 <thead>
-<tr><th>Артифакты Claude Code</th><th>Артифакты Системного мышления</th></tr>
+<tr><th>Артефакты Claude Code</th><th>Артефакты Системного мышления</th></tr>
 </thead>
 <tbody>
 <tr v-click><td><b>CLAUDE.md</b></td><td>Конституция проекта, документированные нормы культуры проекта</td></tr>

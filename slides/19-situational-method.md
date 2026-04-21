@@ -26,5 +26,5 @@ title: Situational method
 </table>
 
 <!--
-Notes
+здесь не нужно распедаливать
 -->

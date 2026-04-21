@@ -21,5 +21,5 @@ title: About me
 </v-clicks>
 
 <!--
-Notes
+Зачем это все? что такое?
 -->
