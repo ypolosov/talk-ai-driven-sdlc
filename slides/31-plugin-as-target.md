@@ -41,11 +41,6 @@ layout: two-cols-header
 
 </v-clicks>
 
-<style>
-.two-cols-header {
-  column-gap: 20px; /* Adjust the gap size as needed */
-}
-</style>
 
 <!--
 Notes

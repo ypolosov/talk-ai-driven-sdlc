@@ -10,9 +10,10 @@ title: Quality attributes
 
 Пример utility tree для целевой системы **промышленная духовка**:
 
-```mermaid
+```mermaid {themeVariables: {fontSize: '28px'}}
+%%{init: {'themeVariables': {'fontSize': '28px'}}}%%
 graph TD
-    U[Utility] --> P[Performance]
+    U[Utility tree] --> P[Performance]
     U --> M[Modifiability]
     U --> A[Availability]
     U --> S[Safety]
