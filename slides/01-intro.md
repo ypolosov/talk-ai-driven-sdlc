@@ -13,8 +13,8 @@ class: intro-slide
 
 </div>
 
-<style>
-.intro-slide h1 {
+<style scoped>
+h1 {
   max-width: calc(100% - 260px);
 }
 .qr-block {
@@ -24,7 +24,6 @@ class: intro-slide
   text-align: center;
   font-size: 0.85em;
   line-height: 1.3;
-  z-index: 10;
 }
 .qr-img {
   width: 200px;

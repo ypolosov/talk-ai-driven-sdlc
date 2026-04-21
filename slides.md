@@ -18,6 +18,11 @@ src: ./slides/03-about-me.md
 <!-- Slide 3: About me -->
 
 ---
+src: ./slides/03a-topics.md
+---
+<!-- Slide 3a: Topics -->
+
+---
 src: ./slides/04-bakery-value-chain.md
 ---
 <!-- Slide 4: Bakery value chain -->
