@@ -9,21 +9,22 @@
 ```
 .
 ├── slides.md             — корневой файл презентации (импортирует все слайды по порядку)
-├── slides/               — отдельные слайды (01-intro … 36-thank-you)
+├── slides/               — отдельные слайды (01-intro … 36-thank-you, включая под-слайды 03a, 21a-c, 30a, 32a, 33a)
 ├── demo/                 — сценарии демонстраций
 │   ├── 01-target-todo-list.md          — демо на целевом проекте todo-list
 │   └── 02-dogfooding-extend-plugin.md  — демо расширения плагина самим собой
 ├── exports/              — экспортированные PDF и PPTX версии
-├── public/               — статические ресурсы (изображения)
+├── public/images/        — статические ресурсы (изображения)
+├── style.css             — кастомные стили презентации
 └── package.json
 ```
 
 ## Технологии
 
-- [Slidev](https://sli.dev/) — презентация из markdown
+- [Slidev](https://sli.dev/) `^52` — презентация из markdown
 - `@slidev/theme-seriph` — визуальная тема
 - `slidev-addon-excalidraw` — встраивание Excalidraw-диаграмм
-- `@playwright/test` — для экспорта в PDF
+- `@playwright/test` + `playwright-chromium` — для экспорта в PDF/PPTX
 
 ## Запуск
 
@@ -50,6 +51,8 @@ npm run build
 ```bash
 npm run export
 ```
+
+Готовые экспорты лежат в [exports/](exports/): `AI-driven SDLC.pdf` и `AI-driven SDLC.pptx`.
 
 ## Связанные репозитории
 
