@@ -24,6 +24,7 @@ h1 {
   text-align: center;
   font-size: 0.85em;
   line-height: 1.3;
+  pointer-events: none;
 }
 .qr-img {
   width: 200px;
