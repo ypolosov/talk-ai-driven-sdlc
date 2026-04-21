@@ -10,7 +10,7 @@ title: OVS DVS
 
 **Operational Value Stream** (OVS) - как мы используем систему
 
-**Development Value Stream** (DVS) - как мы создаем систему
+**Development Value Stream** (DVS) - как мы создаём систему
 
 > И вот ключевой инсайт: **SDLC** можно рассматривать и как **систему создания**, и как **целевую систему**!
 

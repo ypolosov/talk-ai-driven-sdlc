@@ -17,7 +17,7 @@ title: Plugin as creator system
 <tr v-click><td><b>Hook</b></td><td><b>Детерминированная</b> fitness function, автоматический gate</td></tr>
 <tr v-click><td><b>MCP</b></td><td>Внешний конструктив, <b>инструмент</b></td></tr>
 <tr v-click><td><b>Agent team</b></td><td><b>Организация</b> агентов в ролях с peer-to-peer координацией</td></tr>
-<tr v-click><td><b>Plugin</b></td><td>Система создания в сборе,  <b>инструментальный стек</b></td></tr>
+<tr v-click><td><b>Plugin</b></td><td>Система создания в сборе, <b>инструментальный стек</b></td></tr>
 <tr v-click><td><b>Marketplace</b></td><td>Платформа <b>распространения</b> систем создания в сообществе</td></tr>
 </tbody>
 </table>
