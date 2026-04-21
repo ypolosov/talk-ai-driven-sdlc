@@ -3,7 +3,7 @@ title: Intro
 class: intro-slide
 ---
 
-# AI-driven SDLC: через призму системного мышления
+# <b>AI-driven SDLC</b>:<br/>через призму системного мышления
 
 <div class="qr-block">
 
@@ -15,7 +15,7 @@ class: intro-slide
 
 <style>
 .intro-slide h1 {
-  max-width: calc(100% - 340px);
+  max-width: calc(100% - 260px);
 }
 .qr-block {
   position: absolute;
@@ -27,8 +27,8 @@ class: intro-slide
   z-index: 10;
 }
 .qr-img {
-  width: 260px;
-  height: 260px;
+  width: 200px;
+  height: 200px;
   background: white;
   padding: 10px;
   border-radius: 8px;
