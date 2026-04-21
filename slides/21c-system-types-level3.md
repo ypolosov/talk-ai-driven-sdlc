@@ -2,7 +2,7 @@
 title: System types level 3
 ---
 
-# Уровень 3: ЦС = Фабрика / iGaming Platform
+# Аналогия: Фабрика vs iGaming Platform
 
 <v-clicks>
 

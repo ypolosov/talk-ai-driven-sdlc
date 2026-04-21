@@ -6,13 +6,13 @@ title: Market differentiation
 
 <v-click>
 
-Аналоги фокусируются на **workflow** - как организовать работу с AI для написания кода.
+Аналоги фокусируются на **workflow** - как организовать работу с AI **для написания кода**.
 
 </v-click>
 
 <v-click>
 
-Мы фокусируемся на **онтологии** - как вообще думать о создании систем с участием AI.
+Мы фокусируемся на **методологическом каркасе** для использования AI во **всех фазах SDLC**, всеми ролями.
 
 </v-click>
 
@@ -26,7 +26,7 @@ title: Market differentiation
 <tr v-click><td><b>Применимость</b></td><td>Только к коду</td><td>К любым системам (трансдисциплинарно)</td></tr>
 <tr v-click><td><b>Масштаб</b></td><td>Quick vs full / scale-adaptive</td><td>Situational Method Engineering (Pet/Mid/Enterprise)</td></tr>
 <tr v-click><td><b>Continuous Everything</b></td><td>CI/CD</td><td>Dev-time + Ops-time + Evo-time</td></tr>
-<tr v-click><td><b>Self-application</b></td><td>-</td><td>Plugin создаёт сам себя</td></tr>
+<tr v-click><td><b>Self-application</b></td><td>-</td><td><b>Plugin создаёт сам себя</b></td></tr>
 </tbody>
 </table>
 

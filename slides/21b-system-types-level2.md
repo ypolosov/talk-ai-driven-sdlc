@@ -2,7 +2,7 @@
 title: System types level 2
 ---
 
-# Уровень 2: ЦС = Духовка / Оператор tenant
+# Аналогия: Духовка vs Оператор tenant
 
 <v-clicks>
 

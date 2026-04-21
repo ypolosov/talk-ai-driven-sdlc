@@ -12,14 +12,14 @@ title: Target system defined
 
 <v-clicks>
 
-- Целевая система - iGaming site (B2C)
-- Система создания - компания X
-- Надсистема - игровой опыт пользователя (надсистема - это всегда то, что меняет целевая система)
-- Атрибуты качества OVS: 
+- Целевая система - **iGaming site** (B2C)
+- Система создания - **компания X**
+- Надсистема - **игровой опыт пользователя** (надсистема - это всегда то, что меняет целевая система)
+- Атрибуты качества **OVS**: 
   - Availability, Performance, Security, Scalability, Reliability
-- Атрибуты качества DVS: 
-  - Deployability, Configurability, Traceability, Testability, Time-to-market
-- Масштаб - условно Mid size
+- Атрибуты качества **DVS**: 
+  - Deployability, Configurability, **Traceability**, Testability, **Time-to-market**
+- Масштаб - условно **Mid size**
 
 </v-clicks>
 
@@ -31,8 +31,8 @@ title: Target system defined
 
 <v-clicks>
 
-- Почему Traceability - в DVS, а не в OVS?
-- И почему Time-to-market - это именно DVS?
+- Почему **Traceability** - в DVS, а не в OVS?
+- И почему **Time-to-market** - это именно DVS?
 
 </v-clicks>
 

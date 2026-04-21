@@ -6,9 +6,9 @@ title: Quality attributes
 
 <v-clicks>
 
-Атрибуты качества - измеримые свойства системы. 
+Атрибуты качества - **измеримые свойства** системы. 
 
-Пример utility tree для целевой системы **промышленная духовка**:
+Пример **utility tree** для целевой системы **промышленная духовка**:
 
 ```mermaid {themeVariables: {fontSize: '28px'}}
 %%{init: {'themeVariables': {'fontSize': '28px'}}}%%
