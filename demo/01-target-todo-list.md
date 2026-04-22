@@ -2,156 +2,340 @@
 name: demo-01-target-todo-list
 type: demo-scenario
 target: /home/ypolosov/DEV/GITS/todo-list
-plugin: /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin (wave-1 MVP)
-duration: ~15 минут
+plugin: /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin (>= v0.2.1)
+duration: ~25-40 минут (зависит от npm-кэша и скорости Claude)
+resumable: true
+stack: Vite + React + TypeScript + Vitest + Playwright (как в теге pre-demo-backup)
 ---
 
-# Демо-сценарий 1: плагин как система создания для todo-list
+# Демо 1: плагин как система создания для TODO-приложения
 
-Плагин применяется к стороннему проекту `/home/ypolosov/DEV/GITS/todo-list`.
-Пользователь проходит фазы SDLC со смешанными уровнями pet/mid.
-Проверяется: артефакты появляются в целевом, не в плагине.
+Плагин ведёт меня через **все 7 фаз SDLC** для реального TODO-приложения
+с нуля до работающего в браузере. Решения в интерактиве — как в прошлый раз,
+когда я этот же проект строил. К концу демо: приложение запущено,
+`/sdlc-audit` закрывает цикл (`pass` или единичные note, которые можно объяснить).
 
-## Предпосылки
+## Что показывает
 
-- Плагин `ai-driven-sdlc` установлен и активен.
-- Рабочий каталог Claude Code открыт в `/home/ypolosov/DEV/GITS/todo-list`.
-- Git целевого находится в чистом состоянии.
-- У целевого корневой `README.md` уже существует — плагин не перезаписывает его (принцип 17: refuse, Волна 2).
+- Плагин technology-agnostic: стек выбираю я, а не плагин.
+- SME-уровень pet по всем фазам — минимальный процесс под pet-масштаб.
+- TDD-first: Testing идёт **до** Development (принцип 5).
+- TDD-hook блокирует код без парного теста.
+- Все артефакты — в `<target>/.claude/sdlc/`; плагин не трогается.
 
-## Шаг 0. Проверка исходного состояния
+## Предусловия (проверить ДО доклада)
 
-- Показать структуру `todo-list/` — уже есть код, но нет `.claude/sdlc/`.
-- Показать, что плагин пуст от артефактов целевого.
+- Claude Code открыт в `/home/ypolosov/DEV/GITS/todo-list` — убедиться через `pwd` в integrated terminal.
+- Плагин `ai-driven-sdlc` включён (`/plugin` → enabled, версия >= 0.2.1).
+- MCP `context7` активен (нужен для SME-опроса).
+- npm-кэш прогрет (см. «Pre-warm» ниже).
+- Порт 5173 свободен (`lsof -i :5173` → пусто).
 
-## Шаг 1. `/sdlc-init`
+---
 
-- Пользователь запускает `/sdlc-init`.
-- Плагин проверяет отсутствие `.claude/sdlc/` — режим по умолчанию `--fail-if-exists` проходит.
-- Плагин задаёт 5 вопросов:
-  - Размер проекта: pet / mid / enterprise? → **pet** (маленький).
-  - Активная роль сейчас? → **product-owner**.
-  - Текущая целевая система? → корень todo-list.
-  - Где хранить состояние работ? → `TODO.md` в корне (kind=file).
-  - Уровень автономности по умолчанию? → **hitl**.
+## Одноразовая подготовка baseline
 
-**Ожидаемо создано:**
-- `todo-list/.claude/CLAUDE.md`
-- `todo-list/.claude/sdlc/{profile,plugin-config,alphas,system-context,roles,decisions}.md`
-- `todo-list/.env.example`, обновлённый `.gitignore` с `.env`.
-- Запись в `decisions.md` о первых выборах.
+**DESTRUCTIVE**: wipe текущий main до пустого состояния. Текущее финальное приложение сохраняется в теге `pre-demo-backup` — можно восстановить в любой момент.
 
-**Проверка:**
-- В плагине — ничего нового (git status plugin = clean).
+```bash
+cd /home/ypolosov/DEV/GITS/todo-list
+git checkout main
+git tag -f pre-demo-backup              # страховка на готовое приложение
 
-## Шаг 2. `/sdlc-continue` (роль: product-owner)
+git rm -rf .                             # снять все tracked файлы (.env gitignored — остаётся)
+cat > README.md <<'EOF'
+# TODO list
 
-- Плагин читает состояние через `sdlc-state-reader`.
-- Предлагает: `/sdlc-phase vision` (рекомендация), `/sdlc-focus`, `/sdlc-phase requirements`.
-- Выбор: `/sdlc-phase vision`.
+Учебное приложение, создаваемое вживую во время демо доклада «AI-driven SDLC».
+EOF
+cat > .gitignore <<'EOF'
+node_modules/
+dist/
+coverage/
+.env
+.DS_Store
+EOF
+git add README.md .gitignore
+git commit -m "demo: пустой baseline для 01-target-todo-list"
+git tag -f demo-01-start                 # baseline прямо на main
+```
 
-## Шаг 3. `/sdlc-phase vision` (уровень pet)
+**Возврат к финальному приложению** (когда оно снова понадобится):
 
-- `sdlc-method-engineering` задаёт мета-вопросы (стейкхолдеры, ценность).
-- Предлагает инструменты из матрицы (pet): README-as-vision, Elevator Pitch, Mission Statement.
-- Выбор: **README-as-vision**.
-- Через `context7` подтягивается референсная структура.
-- Инстанцируется `todo-list/.claude/sdlc/phases/vision/readme-as-vision.md`.
-- `sdlc-alpha-tracker` продвигает Opportunity → Value Established, Stakeholders → Recognized.
-- Запись в `decisions.md` с альтернативами.
+```bash
+cd /home/ypolosov/DEV/GITS/todo-list
+git reset --hard pre-demo-backup
+```
 
-**Проверка:**
-- Артефакт существует, валиден (`validate-artifact.sh` прошёл PostToolUse).
-- `alphas.md` отражает новые состояния.
+---
 
-## Шаг 4. `/sdlc-phase requirements` (уровень mid)
+## Pre-warm npm-кэша (один раз, до первого тестового прогона)
 
-- Смена роли: `--role developer` или через диалог.
-- Уровень повышен до **mid**.
-- Выбор инструмента: **User Stories + Gherkin AC**.
-- Инстанцируется `phases/requirements/user-stories.md` с 3 историями для todo-list:
-  - Добавить задачу.
-  - Отметить задачу как выполненную.
-  - Удалить задачу.
-- `traces_from` ссылается на `phases/vision/readme-as-vision.md`.
+Ускоряет `npm install` на сцене с ~60-90с до ~10-20с:
 
-## Шаг 5. `/sdlc-phase architecture` (уровень pet)
+```bash
+cd /tmp && rm -rf warm-npm && mkdir warm-npm && cd warm-npm
+npm init -y >/dev/null
+npm install --save-dev vite @vitejs/plugin-react typescript vitest @vitest/ui \
+    @testing-library/react @testing-library/jest-dom jsdom \
+    @playwright/test \
+    eslint @typescript-eslint/eslint-plugin @typescript-eslint/parser \
+    prettier >/dev/null 2>&1
+npm install react react-dom >/dev/null 2>&1
+cd / && rm -rf /tmp/warm-npm
+```
 
-- Выбор инструмента: ASCII box-and-arrow в одностраничном описании.
-- Инстанцируется `phases/architecture/one-pager.md`.
-- `sdlc-alpha-tracker` продвигает Software System → Architecture Selected.
+Если собираетесь делать E2E — дополнительно прогрейте Playwright-браузеры:
+`npx playwright install chromium` (~50 МБ).
 
-## Шаг 6. `/sdlc-focus` на подсистему
+---
 
-- `/sdlc-focus frontend` (allow manual slug).
-- Плагин спрашивает: materialized или logical; путь; роль.
-- Выбор: materialized, `todo-list/web/` как путь, subsystem.
-- Обновляется `system-context.md`.
+## Reset перед каждым прогоном (прямо на main)
 
-## Шаг 7. `/sdlc-phase testing` перед development (TDD-first)
+```bash
+cd /home/ypolosov/DEV/GITS/todo-list
+pkill -f "vite" 2>/dev/null || true
+lsof -ti:5173 | xargs -r kill 2>/dev/null || true
 
-- Выбор инструмента mid: unit + integration.
-- Инстанцируется `phases/testing/test-plan.md`.
-- Настраивается `plugin-config.md` для стека (tdd_pairs, scope).
+# BACKUP .env (содержит токены — не терять!)
+[[ -f .env ]] && cp .env /tmp/demo-01.env.bak
 
-## Шаг 8. `/sdlc-phase development` с HITL
+git reset --hard demo-01-start           # main возвращается к пустому baseline
+git clean -fdx
 
-- Выбор git-модели mid: GitHub Flow.
-- Выбор форматера и линтера (обязательно по принципу 6).
-- `plugin-config.md` дополняется `formatter.command`, `linter.command`.
-- Запись в `profile.md`: строка development с инструментами.
+# RESTORE .env
+[[ -f /tmp/demo-01.env.bak ]] && cp /tmp/demo-01.env.bak .env
+```
 
-**Проверка срабатывания hooks:**
-- Попытка `Write` файла исходника без парного теста → TDD hook (HITL) запрашивает подтверждение.
-- Попытка записать код с комментарием → no-comments hook блокирует.
-- Попытка записать код без форматирования → format/lint hook блокирует.
+---
 
-## Шаг 9. `/sdlc-audit`
+## Прогон
 
-- `sdlc-consistency-auditor` запускается полным прогоном.
-- Детерминированные скрипты проходят (artifact-validator, check-cross-refs).
-- LLM-проверки: трассируемость, соответствие уровню SME, альфы vs артефакты.
-- Отчёт сохраняется в `todo-list/.claude/sdlc/audit.md`.
+> В Claude Code: открыть каталог `/home/ypolosov/DEV/GITS/todo-list`.
+> Все решения передаю **inline в промпте**; плагин всё равно может открыть SME-опрос
+> (это обязательно по `sdlc-bootstrap` / `sdlc-method-engineering`) — в диалоге
+> подтверждаю, что ответ уже в промпте, или выбираю рекомендованное.
 
-**Ожидаемый статус:** `pass`.
+---
 
-## Шаг 10. Контроль granица плагин/целевой
+### Шаг 0 — показать пустоту и проверить cwd
 
-- В `/home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin/`: git status — clean.
-- В `/home/ypolosov/DEV/GITS/todo-list/`: все артефакты в `.claude/sdlc/phases/**`.
-- grep по плагину на имена конкретных инструментов — только в `catalogs/method-tool-matrix.md`.
+**Скажи залу:** «Пустой репозиторий — сейчас всё появится».
 
-## Контрольные артефакты в todo-list
+```bash
+pwd    # должен быть /home/ypolosov/DEV/GITS/todo-list
+ls -la
+```
 
-- `.claude/CLAUDE.md`
-- `.claude/sdlc/profile.md` (с 4 строками: vision=pet, requirements=mid, architecture=pet, development=mid, testing=mid)
-- `.claude/sdlc/plugin-config.md` (state_artifact, tdd_pairs, formatter, linter)
-- `.claude/sdlc/alphas.md` (продвинутые альфы)
-- `.claude/sdlc/system-context.md` (две системы: root и frontend-subsystem)
-- `.claude/sdlc/roles.md`
-- `.claude/sdlc/decisions.md` (≥5 записей)
-- `.claude/sdlc/phases/vision/readme-as-vision.md`
-- `.claude/sdlc/phases/requirements/user-stories.md`
-- `.claude/sdlc/phases/architecture/one-pager.md`
-- `.claude/sdlc/phases/testing/test-plan.md`
-- `.claude/sdlc/phases/development/<git-workflow>.md`
-- `.claude/sdlc/audit.md` (status: pass)
-- `.env.example`
-- обновлённый `.gitignore` (с `.env`)
+---
 
-## Что демонстрирует
+### Шаг 1 — `/sdlc-init`
 
-- Плагин technology-agnostic: имена конкретных инструментов встречаются только как пользовательский выбор.
-- Альтернативы всегда порождаются и фиксируются (принцип 1).
-- Границы целевой системы переносятся вниманием (принцип 7).
-- TDD работает мягкой блокировкой (принцип 5).
-- Форматер и линтер обязательны (принцип 6).
-- Все артефакты пишутся в целевом, не в плагине (принцип 3).
-- Многоуровневый фокус внимания поддерживается (принцип 7; Волна 2 добавит README систем).
+**Скажи залу:** «Разворачиваю каркас SDLC одной командой».
 
-## Ограничения Волны 1
+```
+/sdlc-init уровень - pet, роль - product-owner, целевая система - корень репозитория, state-артефакт - .claude/sdlc/tasks.md, автономность - hitl
+```
 
-- `README.sdlc.md` систем внимания — Волна 2 (принцип 17).
-- `memom.md` плагина — Волна 2 (принцип 15).
-- `check-readme-inventory.sh` и `check-system-readmes.sh` — Волна 2.
-- Dogfooding сценарий (02-dogfooding-extend-plugin.md) — Волна 2.
+**Ожидаемо:** `.claude/sdlc/` с базовыми файлами, hooks активны.
+
+---
+
+### Шаг 2 — `/sdlc-phase vision`
+
+**Скажи залу:** «Зачем мы это делаем — одним промптом».
+
+```
+/sdlc-phase vision уровень - pet, автономность - hitl, фокус - корень проекта, вижен - учебное single-user TODO-приложение на pet-масштабе, предмет вторичен, главное - показать процесс SDLC, предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 3 — `/sdlc-phase requirements`
+
+**Скажи залу:** «Декомпозирую цель в проверяемые требования».
+
+```
+/sdlc-phase requirements уровень - pet, автономность - hitl, фокус - корень проекта, требования - CRUD задач (add / toggle / remove) + фильтр по статусу (активные / выполненные / все), persistence через localStorage, без регистрации, предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 4 — `/sdlc-phase architecture`
+
+**Скажи залу:** «Значимые архитектурные решения — одной страницей».
+
+```
+/sdlc-phase architecture уровень - pet, автономность - hitl, фокус - корень проекта, архитектура - spa, ddd-lite, hexagonal (слои domain / application / adapters), localStorage как storage-адаптер, качественные атрибуты - простота + целостность данных, предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 5 — `/sdlc-phase testing` (TDD-first!)
+
+**Скажи залу:** «Перед кодом — тесты. Принцип номер пять».
+
+```
+/sdlc-phase testing уровень - pet, автономность - hotl, фокус - корень проекта, виды тестов - Vitest unit на domain / application с coverage 100% + Playwright smoke E2E на сквозной сценарий add-toggle-remove, предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 6 — `/sdlc-phase development` (РЕАЛЬНЫЙ КОД, HOOTL, ~15 мин)
+
+**Скажи залу:** «HOOTL — плагин ведёт разработку бесшовно до конца. TDD-hook всё равно сработает, это системный guardrail, не опрос».
+
+```
+/sdlc-phase development уровень - pet, автономность - hootl, фокус - корень проекта, стек - typescript, react, vite, vitest, react-testing-library, playwright, localstorage, TDD Red-Green-Refactor по фиче, предложи варианты инструментов, подходов
+```
+
+**После выбора инструментов — один большой промпт, Claude идёт до конца:**
+
+```
+Реализуй всё приложение до рабочего состояния в браузере. Не проси подтверждений между шагами. Коммиты не делай — я сделаю вручную после демо. Браузер не открывай — dev-сервер оставь запущенным, я открою сам.
+
+Шаг A. Инфраструктура:
+- package.json (scripts: dev, build, preview, test, test:e2e, lint, format),
+- tsconfig.json + tsconfig.node.json (второй нужен для vite.config.ts и playwright.config.ts),
+- vite.config.ts с base: '/todo-list/' (для GitHub Pages),
+- vitest.config.ts (environment jsdom, setupFiles ['src/test-setup.ts']),
+- src/test-setup.ts с import '@testing-library/jest-dom',
+- eslint.config.js, .prettierrc,
+- index.html,
+- playwright.config.ts (минимальный, chromium only, baseURL http://localhost:5173),
+- .gitignore уже есть.
+Запусти npm install.
+
+Шаг B. ВАЖНО — демонстрация TDD-hook. Первой операцией ПОПЫТАЙСЯ создать src/domain/todoList.ts БЕЗ теста (я хочу чтобы в зале сработал TDD-hook PreToolUse блокировка). Это намеренное нарушение TDD для показа guardrail. Команда Write src/domain/todoList.ts { add, toggle, remove }. После блокировки hook — переключись на нормальный TDD-цикл (step C).
+
+Шаг C. TDD по фичам в домене — для каждой фичи (add, toggle, remove, filter by status):
+- сначала failing-тест в src/domain/todoList.test.ts, запусти npm test (ожидаем red);
+- затем минимальная реализация в src/domain/todoList.ts, npm test (green);
+- короткий рефакторинг, npm test (green).
+
+Шаг D. Application-слой + адаптер localStorage (тоже TDD-first: сначала src/application/*.test.ts и src/adapters/localStorage.test.ts, потом реализация). Mock localStorage через vi.stubGlobal или beforeEach.
+
+Шаг E. UI-слой: React-компоненты TodoList, TodoItem, AddForm, FilterTabs с RTL-тестами (TDD). src/main.tsx подключает всё.
+
+Шаг F. E2E-смоук: e2e/smoke.spec.ts — Playwright сценарий add → toggle → remove с assert на видимость элементов. НЕ запускай npx playwright install — считаем что браузер уже есть. Запусти npx playwright test, покажи green.
+
+Шаг G. npm run dev — запусти, выведи URL (http://localhost:5173). Остановись здесь.
+```
+
+**Открыть браузер** на `http://localhost:5173` вживую. Добавить задачи, отметить, перезагрузить, переключить фильтр.
+
+---
+
+### Шаг 7 — `/sdlc-phase deployment`
+
+**Скажи залу:** «Куда деплоим».
+
+**Остановить dev** (Ctrl+C).
+
+```
+/sdlc-phase deployment уровень - pet, автономность - hotl, фокус - корень проекта, деплой - GitHub Pages через Actions, base путь /todo-list/ (уже в vite.config), rollback - git revert через тот же pipeline, предложи варианты инструментов, подходов
+```
+
+**После выбора инструментов:**
+
+```
+Собери .github/workflows/deploy.yml для GitHub Pages (triggers: push на main; actions/upload-pages-artifact; deploy-pages). Выполни npm run build локально. Покажи размер dist/. Сам deploy на GitHub не триггерим — только артефакт.
+```
+
+---
+
+### Шаг 8 — `/sdlc-phase operations`
+
+```
+/sdlc-phase operations уровень - pet, автономность - hootl, фокус - корень проекта, наблюдаемость - ручная проверка URL + GitHub Issues как канал обратной связи, инциденты - revert + 1-строчный postmortem в decisions.md, предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 9 — `/sdlc-audit`
+
+**Скажи залу:** «Сквозная проверка».
+
+```
+/sdlc-audit
+```
+
+**Ожидаемо:** `audit.md` со статусом `pass` или единичные note — объясняю залу что это и почему pet-масштаб допускает такие напоминания.
+
+---
+
+### Шаг 10 — контроль границ
+
+**Скажи залу:** «Весь код фичи — в целевом проекте; плагин не получил ни одного коммита».
+
+```bash
+cd /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin && git status
+cd /home/ypolosov/DEV/GITS/todo-list
+find .claude/sdlc/phases -name "*.md" | sort
+```
+
+В плагине: `working tree clean`. В целевом: артефакты 7 фаз SDLC.
+
+---
+
+## Контрольные артефакты после прогона
+
+```
+.claude/CLAUDE.md
+.claude/sdlc/{profile,plugin-config,alphas,system-context,roles,decisions,tasks}.md
+.claude/sdlc/phases/vision/vision.md
+.claude/sdlc/phases/requirements/requirements.md
+.claude/sdlc/phases/architecture/architecture.md
+.claude/sdlc/phases/testing/testing.md
+.claude/sdlc/phases/development/development.md
+.claude/sdlc/phases/deployment/deployment.md
+.claude/sdlc/phases/operations/operations.md
+.claude/sdlc/audit.md                           # pass или note-уровень
+package.json, package-lock.json
+tsconfig.json, tsconfig.node.json
+vite.config.ts (с base: '/todo-list/')
+vitest.config.ts, src/test-setup.ts
+playwright.config.ts
+eslint.config.js, .prettierrc
+index.html
+src/domain/** (todoList.ts + .test.ts)
+src/application/** (.ts + .test.ts)
+src/adapters/localStorage.ts (+ .test.ts)
+src/components/** (TodoList, TodoItem, AddForm, FilterTabs + RTL-тесты)
+src/main.tsx
+e2e/smoke.spec.ts
+.github/workflows/deploy.yml
+dist/                                            # после npm run build
+```
+
+---
+
+## Reset после прогона (прямо на main)
+
+```bash
+cd /home/ypolosov/DEV/GITS/todo-list
+pkill -f "vite" 2>/dev/null || true
+lsof -ti:5173 | xargs -r kill 2>/dev/null || true
+
+# BACKUP .env (содержит токены — не терять!)
+[[ -f .env ]] && cp .env /tmp/demo-01.env.bak
+
+git reset --hard demo-01-start
+git clean -fdx
+
+# RESTORE .env
+[[ -f /tmp/demo-01.env.bak ]] && cp /tmp/demo-01.env.bak .env
+```
+
+---
+
+## Резервный план
+
+- **`npm install` тормозит** — narrate про артефакты vision/requirements. На крайний случай `npm install --prefer-offline`.
+- **Порт 5173 занят** — `lsof -ti:5173 | xargs -r kill`; если Vite взял 5174+ — обновить URL в narrative.
+- **TDD-hook не сработал в Step B** — Claude начал с теста вопреки промпту. Не критично для демо: поясни залу что Claude уже знает принцип, но hook **срабатывает независимо**; попроси вручную: «создай `src/utils.ts` с функцией `noop` без теста — покажи hook». Hook блокирует на любом `Write` в `src/**` без пары.
+- **Playwright browsers не установлены** — `npx playwright install chromium` (~30 с при прогретом кэше). Или убрать Step F из промпта и запустить только unit-тесты.
+- **Claude залип в HOOTL > 15 мин** — прерви (Esc), `/sdlc-autonomy hitl`, продолжи с конкретного шага.
+- **SME-опрос разворачивается несмотря на inline-промпт** — в каждом диалоге выбирай «Other» и вставляй то, что уже в inline-промпте, либо «рекомендованный».
+- **`/sdlc-audit` вернул fail** — показать отчёт залу, вместе с кратким «почему» (обычно отсутствующие `traces_from` или устаревшие `updated`). Это честный live-demo момент.
+- **Что-то пошло совсем не так** — `git reset --hard demo-01-start && git clean -fdx` и начни с нужного шага.

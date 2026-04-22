@@ -2,157 +2,223 @@
 name: demo-02-dogfooding-extend-plugin
 type: demo-scenario
 target: /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin
-plugin: /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin (wave-2)
-duration: ~15 минут
+plugin: /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin (>= v0.2.1)
+duration: ~12-15 минут
+resumable: true
+feature: добавить роль analyst в catalogs/roles.md
 ---
 
-# Демо-сценарий 2: плагин расширяет сам себя (dogfooding)
+# Демо 2: плагин применяется к самому себе (dogfooding)
 
-Плагин `ai-driven-sdlc` применяется к собственному репозиторию как целевой системе.
-Демонстрирует принцип 12: плагин применим к любому IT-продукту, включая самого себя.
-Опора — Том 2 гл. 8 «Графы создания» (самопорождающие циклы).
+Плагин — **одновременно** целевая система и система создания.
+На сцене добавляю **новую роль `analyst`** в `catalogs/roles.md`:
+vision → requirements → architecture → testing → development → audit → commit.
 
-## Цель фичи
+## Что показывает
 
-Добавить в `catalogs/roles.md` новую роль `security-officer` с соответствующей привязкой.
-Эта фича — простая, методологически осмысленная; не требует нового кода.
-Показывает, как каркас плагина ведёт свою собственную разработку.
+- Принцип 12: плагин применим к любой IT-системе, включая самого себя.
+- Плагин уже dogfooded — артефакты SDLC в корне плагина с прошлых волн.
+- `memom.md` не меняется (принципы не трогаем, принцип 15).
+- `check-readme-inventory.sh` зелёный (публичная поверхность не меняется, принцип 16).
 
-## Предпосылки
+## Предусловия (проверить ДО доклада)
 
-- Плагин установлен; Волны 1 и 2 влиты в `main`.
-- Рабочий каталог Claude Code открыт в `/home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin`.
-- Git плагина в чистом состоянии; создана ветка `feat/add-security-officer-role`.
+- Claude Code открыт в `/home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin` — `pwd` в integrated terminal.
+- Плагин `ai-driven-sdlc` включён (`/plugin` → enabled, >= v0.2.1).
+- MCP `context7` активен.
+- `demo-02-start` тег существует (см. «Одноразовая подготовка»).
 
-## Шаг 0. Показать исходное состояние
+---
 
-- Плагин ещё не имеет `.claude/sdlc/` (целевой проект = сам плагин).
-- `catalogs/roles.md` содержит 8 ролей без `security-officer`.
+## Одноразовая подготовка baseline
 
-## Шаг 1. `/sdlc-init --merge`
+```bash
+cd /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin
+git checkout main
+git tag -f demo-02-start
+```
 
-- Плагин обнаруживает отсутствие `.claude/sdlc/`.
-- Режим `--merge` (или дефолтный `--fail-if-exists`) проходит, создаётся каркас.
-- Вопросы bootstrap:
-  - Размер проекта: **pet** (плагин маленький).
-  - Активная роль: **method-engineer** (кто ещё развивает методологический каркас).
-  - Целевая система: корень плагина (slug: `ai-driven-sdlc-plugin`).
-  - State-артефакт: `TODO.md` в корне плагина или `BACKLOG.md` в `.claude/sdlc/`.
-  - Автономность: **hitl**.
+---
 
-**Создано в целевом (= плагине):**
-- `.claude/CLAUDE.md` (конституция «целевого» = плагина).
-- `.claude/sdlc/{profile,plugin-config,alphas,system-context,roles,decisions}.md`.
-- `.env.example`, обновлённый `.gitignore`.
+## Reset перед каждым прогоном (прямо на main)
 
-## Шаг 2. `/sdlc-focus ai-driven-sdlc-plugin`
+```bash
+cd /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin
 
-- Перенос внимания на плагин как целевую систему.
-- `kind=materialized`, `role_vs_target=target`.
-- Создаётся `README.sdlc.md` в корне плагина (sidecar; корневой `README.md` не трогается — политика refuse).
-- Обновляется `system-context.md`.
+# BACKUP .env (содержит токены — не терять!)
+[[ -f .env ]] && cp .env /tmp/demo-02.env.bak
 
-## Шаг 3. `/sdlc-phase vision` (уровень pet)
+git reset --hard demo-02-start
+git clean -fd
 
-- Мета-вопросы: зачем нужна роль `security-officer`?
-- Инструмент pet: README-as-vision (Mission Statement) для фичи.
-- Инстанцируется `phases/vision/add-security-officer-vision.md`:
-  - проблема: без роли нет явной ответственности за безопасность в SDLC;
-  - цель: добавить роль с интересами и привязкой к фазам.
-- `sdlc-alpha-tracker` продвигает Opportunity → Value Established.
+# RESTORE .env
+[[ -f /tmp/demo-02.env.bak ]] && cp /tmp/demo-02.env.bak .env
+```
 
-## Шаг 4. `/sdlc-phase requirements` (уровень mid)
+---
 
-- Инструмент: user stories (одна-две).
-- Инстанцируется `phases/requirements/user-stories.md`:
-  - story 1: «Как method-engineer, я хочу добавить security-officer в roles.md, чтобы зафиксировать ответственность за ИБ».
-  - acceptance: `roles.md` содержит запись; `check-readme-inventory.sh` проходит.
-- `traces_from`: артефакт vision.
+## Прогон
 
-## Шаг 5. `/sdlc-phase architecture` (уровень pet)
+> В Claude Code: открыть каталог `/home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin`.
+> Все решения передаю **inline в промпте**; плагин может всё равно открыть SME-опрос —
+> в диалоге подтверждаю что ответ уже в промпте или выбираю рекомендованный.
+> **Важно**: новые артефакты фаз для этой фичи создаются с префиксом `add-analyst-*.md`,
+> чтобы не затереть существующие dogfooded-файлы плагина от прошлых волн.
 
-- Инструмент: одностраничное описание структуры изменений.
-- Описывает: какие файлы меняются (`catalogs/roles.md`); где потом упоминается (`method-tool-matrix.md` при необходимости).
-- `sdlc-alpha-tracker` продвигает Software System → Architecture Selected.
+---
 
-## Шаг 6. `/sdlc-phase testing` (pet, до кода — TDD)
+### Шаг 0 — показать исходное состояние и проверить cwd
 
-- Смоук-тест: `grep -F 'security-officer' catalogs/roles.md` должен вернуть >0 строк после внесения.
-- Инстанцируется `phases/testing/grep-roles-test.md`.
+**Скажи залу:** «Плагин — target, dogfooding. Добавлю роль аналитика через весь цикл».
 
-## Шаг 7. `/sdlc-phase development`
+```bash
+pwd                                    # /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin
+ls .claude/sdlc/phases/                # все фазы dogfooded с прошлых волн
+git branch --show-current              # main
+grep -c "^### " catalogs/roles.md      # 8
+```
 
-- Правка `catalogs/roles.md`: новая роль:
-  ```
-  ### security-officer
-  title: Инженер по информационной безопасности
-  phases: [development, testing, deployment, operations]
-  alphas: [Software System, Way of Working]
-  interests: [безопасная разработка, SAST/DAST, управление секретами, комплаенс]
-  methods: [software-construction, software-testing, continuous-delivery]
-  ```
-- TDD hook: у нас pet-уровень, TDD-пары не настроены — hook пропускает изменение каталога.
-- Format/lint hook: pet уровень, минимальные требования — проходит.
-- No-comments hook: markdown-файл, пропуск.
-- Validate-artifact: каталог — не артефакт SDLC в `.claude/sdlc/**`, пропуск.
+---
 
-## Шаг 8. Обновление README плагина
+### Шаг 1 — `/sdlc-continue`
 
-- Добавить `security-officer` в раздел «Roles» README плагина (если роль публична).
-- `check-readme-inventory.sh` не ругается, потому что проверяет только skills/commands/agents/scripts/meta-templates.
-- **Не забыть:** при изменении принципов — обновить `memom.md` (в этой фиче принципы не меняются).
+**Скажи залу:** «Моя роль — method-engineer, развиваю методологию».
 
-## Шаг 9. `/sdlc-audit`
+```
+/sdlc-continue роль - method-engineer, задача - добавить роль analyst в catalogs/roles.md
+```
 
-- `sdlc-consistency-auditor` запускается.
-- Проверяет:
-  - Трассируемость: vision → requirements → architecture → testing → реализация.
-  - Альфы: Opportunity → Value Established, Software System → Architecture Selected.
-  - Осиротевшие ссылки — нет.
-- Отчёт в `.claude/sdlc/audit.md`: **status: pass**.
+**Выбираю:** `/sdlc-phase vision`.
 
-## Шаг 10. Commit и merge
+---
 
-- Создан коммит в ветке `feat/add-security-officer-role`:
-  - `catalogs/roles.md`: +роль;
-  - `.claude/sdlc/**`: артефакты фаз по dogfooding.
-- `check-memom-consistency.sh` (pre-commit): `CLAUDE.md` не менялся — проход.
-- PR в main, review, merge.
+### Шаг 2 — `/sdlc-phase vision`
 
-## Контрольные артефакты в плагине
+**Скажи залу:** «Зачем нужна роль».
 
-- `.claude/CLAUDE.md`
-- `.claude/sdlc/profile.md` (5 фаз со смешанными уровнями).
-- `.claude/sdlc/plugin-config.md`.
-- `.claude/sdlc/alphas.md` (продвинутые альфы).
-- `.claude/sdlc/system-context.md` (плагин как materialized target).
-- `.claude/sdlc/roles.md` (активна method-engineer).
-- `.claude/sdlc/decisions.md` (≥5 записей).
-- `README.sdlc.md` в корне плагина (sidecar — не перезаписывает `README.md`).
-- `.claude/sdlc/phases/vision/add-security-officer-vision.md`.
-- `.claude/sdlc/phases/requirements/user-stories.md`.
-- `.claude/sdlc/phases/architecture/one-pager.md`.
-- `.claude/sdlc/phases/testing/grep-roles-test.md`.
-- `.claude/sdlc/audit.md` (status: pass).
+```
+/sdlc-phase vision уровень - pet, автономность - hitl, фокус - плагин (dogfooding), вижен - нет явной роли аналитика между product-owner и architect, добавить analyst с ответственностью за формализацию требований и работу со стейкхолдерами, артефакт сохрани как .claude/sdlc/phases/vision/add-analyst-vision.md (НЕ затирай существующий vision.md), предложи варианты инструментов, подходов
+```
 
-## Что демонстрирует
+---
 
-- Принцип 12: плагин применим к самому себе.
-- Принцип 17: `README.sdlc.md` как sidecar не перезаписывает существующий `README.md`.
-- Принцип 15: `memom.md` — журнал; изменение не требует записи, потому что принципы не менялись.
-- Принцип 16: `check-readme-inventory.sh` остаётся зелёным, потому что имена skills/commands/agents/scripts не трогались.
-- Принцип 13: dogfooding демонстрирует полноту аудита.
-- Граф создания (Левенчук Том 2 гл. 8): плагин — одновременно целевая и система-создатель.
+### Шаг 3 — `/sdlc-phase requirements`
 
-## Если принципы меняются
+```
+/sdlc-phase requirements уровень - mid, автономность - hitl, фокус - плагин, требования - одна user story «как method-engineer хочу добавить analyst в roles.md», AC - запись соответствует схеме раздела «Схема записи», grep подтверждает запись, check-readme-inventory.sh зелёный, артефакт .claude/sdlc/phases/requirements/add-analyst-requirements.md (НЕ затирай существующий requirements.md), traces_from add-analyst-vision.md, предложи варианты инструментов, подходов
+```
 
-Если в ходе dogfooding обнаруживается необходимость поправить принцип:
-1. Обновить `CLAUDE.md` плагина.
-2. В том же коммите — добавить запись в `memom.md` с формулировкой до/после, мотивом, последствиями.
-3. `check-memom-consistency.sh` блокирует коммит, если запись пропущена.
+---
 
-## Ограничения сценария
+### Шаг 4 — `/sdlc-phase architecture`
 
-- Не меняется публичная поверхность плагина (skills/commands/agents).
-- Расширение каталога — типичный кейс эволюции методологии.
-- Более сложные dogfooding-сценарии (добавление skill, новой фазы) демонстрируются отдельно.
+```
+/sdlc-phase architecture уровень - pet, автономность - hitl, фокус - плагин, архитектура - правка одного файла catalogs/roles.md, не трогаем skills / commands / agents / memom.md, артефакт .claude/sdlc/phases/architecture/add-analyst-architecture.md (НЕ затирай architecture.md), traces_from add-analyst-requirements.md, предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 5 — `/sdlc-phase testing`
+
+**Скажи залу:** «Smoke — bash-команды, без тест-фреймворка».
+
+```
+/sdlc-phase testing уровень - pet, автономность - hotl, фокус - плагин, виды тестов - smoke как bash-команды (grep -c по catalogs/roles.md + bash scripts/check-readme-inventory.sh), НЕ создавай тест-фреймворк, артефакт .claude/sdlc/phases/testing/add-analyst-testing.md (НЕ затирай testing.md), запусти команды сейчас до реализации и ожидай red (grep вернёт 0 совпадений для analyst), предложи варианты инструментов, подходов
+```
+
+---
+
+### Шаг 6 — `/sdlc-phase development` (РЕАЛЬНАЯ ПРАВКА)
+
+```
+/sdlc-phase development уровень - pet, автономность - hotl, фокус - плагин, git - прямо на main (откат через тег demo-02-start после демо), правка - добавить запись analyst в catalogs/roles.md после product-owner и в итоговую таблицу «role → phases → alphas обязательные», после правки запусти smoke и покажи green, НЕ делай git commit — я сделаю вручную в следующем шаге, предложи варианты инструментов, подходов
+```
+
+**Содержание записи** (передаю при первом же уточнении):
+
+```
+### analyst
+title: Системный аналитик
+phases: [vision, requirements]
+alphas: [Opportunity, Stakeholders, Requirements]
+interests: [формализация требований, интересы стейкхолдеров, непротиворечивость модели]
+methods: [stakeholder-analysis, requirements-elicitation]
+```
+
+---
+
+### Шаг 7 — `/sdlc-audit`
+
+```
+/sdlc-audit
+```
+
+**Ожидаемо:** `audit.md` `pass` или единичные note. Если всплывают старые расхождения dogfooded-артефактов прошлых волн — показываю их залу как честный результат сквозной проверки всего плагина, не только новой фичи.
+
+---
+
+### Шаг 8 — commit + diff
+
+**Скажи залу:** «Коммит прямо в main. После демо — откатится через тег».
+
+```bash
+# селективный add: только файлы фичи + журналы
+git add catalogs/roles.md
+git add .claude/sdlc/phases/vision/add-analyst-vision.md
+git add .claude/sdlc/phases/requirements/add-analyst-requirements.md
+git add .claude/sdlc/phases/architecture/add-analyst-architecture.md
+git add .claude/sdlc/phases/testing/add-analyst-testing.md
+git add .claude/sdlc/alphas.md .claude/sdlc/decisions.md .claude/sdlc/audit.md
+
+git status   # проверка — что именно в staged
+
+git commit -m "feat(catalogs): add analyst role
+
+Refs: dogfooding demo 02 (принцип 12)."
+
+git log -1 --stat
+git diff demo-02-start -- catalogs/roles.md | head -30
+```
+
+---
+
+## Контрольные артефакты после прогона
+
+```
+catalogs/roles.md                                             # +запись analyst + строка в итоговой таблице
+.claude/sdlc/phases/vision/add-analyst-vision.md              # новый, без затирания vision.md
+.claude/sdlc/phases/requirements/add-analyst-requirements.md  # новый
+.claude/sdlc/phases/architecture/add-analyst-architecture.md  # новый
+.claude/sdlc/phases/testing/add-analyst-testing.md            # новый
+.claude/sdlc/alphas.md, decisions.md, audit.md                # обновлены
+git: main, 1 коммит сверх baseline-тега demo-02-start
+```
+
+---
+
+## Reset после прогона (прямо на main)
+
+```bash
+cd /home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin
+
+# BACKUP .env (содержит токены — не терять!)
+[[ -f .env ]] && cp .env /tmp/demo-02.env.bak
+
+git reset --hard demo-02-start
+git clean -fd
+
+# RESTORE .env
+[[ -f /tmp/demo-02.env.bak ]] && cp /tmp/demo-02.env.bak .env
+```
+
+---
+
+## Резервный план
+
+- **`check-readme-inventory.sh` упал** — скрипт проверяет skills/commands/agents/scripts/meta-templates, не catalogs; фича безопасна.
+- **`check-memom-consistency.sh` блокирует** — `CLAUDE.md` случайно в staged; `git reset HEAD CLAUDE.md` и коммит снова.
+- **`/sdlc-audit` вернул fail** — показать отчёт, разобрать пункт в проблеме. Если важные — применить fix (`/sdlc-audit --apply`) и повторить.
+- **Claude затёр существующий `vision.md` / `requirements.md`** — прервать (Esc), `git checkout .claude/sdlc/phases/ -- <файл>` из baseline-тега, перезапустить соответствующий шаг с явным указанием нового пути.
+- **Claude автоматически сделал `git commit`** — `git reset --soft HEAD~1`, продолжить с ручным коммитом в шаге 8.
+- **Не тот каталог** — `pwd` должна быть `/home/ypolosov/DEV/GITS/ai-driven-sdlc-plugin`.
+- **Что-то пошло совсем не так** — reset-блок целиком возвращает состояние: `git reset --hard demo-02-start && git clean -fd`.
